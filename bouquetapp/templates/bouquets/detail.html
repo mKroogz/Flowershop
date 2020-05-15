@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bouquet</title>
+  </head>
+  <body>
+    <h1>{{ info.name }}</h1>
+    <h2>For {{ info.occasion }}</h2>
+
+    <div>Contains:</div>
+    {% for bouquet in bouquets %}
+    {% if bouquet.quantity > 1%}
+    <div>
+    <span style="display: inline;">
+    {{ bouquet.quantity }} {{ bouquet.flower }} Flowers 
+    <form action="{% url 'bouquetapp:bouquet' bouquet.id  %}" style="display: inline;" method="POST">
+        <input type="hidden" name="actual_method" value="DELETE">
+        <button>Delete</button>
+    </form>
+    </span>
+    </div>
+    {% else %}
+    <div>
+    <span style="display: inline;">
+    {{ bouquet.quantity }} {{ bouquet.flower }} Flower 
+    <form action="{% url 'bouquetapp:bouquet' bouquet.id  %}" style="display: inline;" method="POST">
+        <input type="hidden" name="actual_method" value="DELETE">
+        <button>Delete</button>
+    </form>
+    </span>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </body>
+</html>
