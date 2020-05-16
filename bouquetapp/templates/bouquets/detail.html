@@ -7,16 +7,22 @@
   </head>
   <body>
     <h1>{{ info.name }}</h1>
+    {% if info != ""%}
     <h2>For {{ info.occasion }}</h2>
 
     <div>Contains:</div>
+    {%else%}
+    <h2>This arrangment is still under construction</h2>
+    {%endif%}
     {% for bouquet in bouquets %}
     {% if bouquet.quantity > 1%}
     <div>
     <span style="display: inline;">
-    {{ bouquet.quantity }} {{ bouquet.flower }} Flowers 
+    {{ bouquet.quantity }} {{ bouquet.flower_name }} Flowers 
     <form action="{% url 'bouquetapp:bouquet' bouquet.id  %}" style="display: inline;" method="POST">
+    {% csrf_token %}
         <input type="hidden" name="actual_method" value="DELETE">
+        <input type="hidden" name="flower" value={{ bouquet.flower }}>
         <button>Delete</button>
     </form>
     </span>
@@ -24,9 +30,11 @@
     {% else %}
     <div>
     <span style="display: inline;">
-    {{ bouquet.quantity }} {{ bouquet.flower }} Flower 
+    {{ bouquet.quantity }} {{ bouquet.flower_name }} Flower 
     <form action="{% url 'bouquetapp:bouquet' bouquet.id  %}" style="display: inline;" method="POST">
+    {% csrf_token %}
         <input type="hidden" name="actual_method" value="DELETE">
+        <input type="hidden" name="flower" value={{ bouquet.flower }}>
         <button>Delete</button>
     </form>
     </span>
